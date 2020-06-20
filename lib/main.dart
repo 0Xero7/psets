@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       
       onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: '/login/registerpage',
+      initialRoute: '/login/loginpage',
     );
   }
 }
