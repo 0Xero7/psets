@@ -25,6 +25,9 @@ class UserModel {
 
 
   static Future<bool> tryLogin(String username, String password) async {
+    if (username == null || password == null) return false;
+    if (username.trim() == '' || password == '') return false;
+
     var user = await Firestore.instance.document('/userdata/$username').get();
     if (!user.exists) return false;
 
@@ -39,6 +42,38 @@ class UserModel {
 
     return success;
   }
+
+
+  static Future<bool> isUsernameViable(String username) async {
+    if (username == null || username.trim() == '') return false;
+
+    var test = await Firestore.instance.document('/userdata/$username').get();
+    if (test.exists) return false;
+    return true;
+  }
+
+  static Future registerUser(String username, String password) async {
+    if (password == null || username == null) return;
+    if (username.trim() == '' || password.trim() == '') return;
+
+    var _salt = getRandomString(64);
+    var _hash = getHashFromSaltAndPassword(_salt, password);
+
+    await Firestore.instance.collection('userdata').document('$username').setData({
+      'salt': _salt,
+      'password': _hash
+    });
+
+    await Firestore.instance.collection('userdata').document('$username').collection('problemdata').document('c_solve').setData(
+      { 'c_solves': [] }
+    );
+
+    await Firestore.instance.collection('userdata').document('$username').collection('problemdata').document('solved').setData(
+      { 'solved_problems': [] }
+    );
+  }
+
+    
 
 
 

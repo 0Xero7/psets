@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -39,6 +40,8 @@ class _RegisterPage extends State<RegisterPage> {
               )
             ),
 
+            Text('Available'),
+
             Container(
               width: 200,
               child: TextField(
@@ -52,7 +55,10 @@ class _RegisterPage extends State<RegisterPage> {
             ),
 
             FlatButton(
-              onPressed: () {},
+              onPressed: () async { 
+                if (await UserModel.isUsernameViable(_username.text))
+                  await UserModel.registerUser(_username.text, _password.text);
+              },
               child: Text("Register"),
             ),
 

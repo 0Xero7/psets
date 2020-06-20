@@ -131,7 +131,10 @@ class _DashboardState extends State<Dashboard> {
                                   borderRadius: BorderRadius.circular(10),
                                   hoverColor: Colors.grey.withAlpha(100),
 
-                                  onTap: () => Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1)),
+                                  onTap: () {
+                                    if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null) return null;
+                                    Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1));
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Column(
