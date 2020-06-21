@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
         child: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (context, snapshot) {
-            if (snapshot.hasData && (snapshot as FirebaseUser) == null) Navigator.popAndPushNamed(context, '/login/loginpage');
+            if (snapshot.hasData && (snapshot.data as FirebaseUser) == null) Navigator.popAndPushNamed(context, '/login/loginpage');
             return Stack(
               children: [
                 Positioned(
