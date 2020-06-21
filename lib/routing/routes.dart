@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psettracker/loadpage.dart';
+import 'package:psettracker/pages/auth/checkauth.dart';
 import 'package:psettracker/pages/dashboard.dart';
 import 'package:psettracker/pages/day1.dart';
 import 'package:psettracker/pages/loginpage.dart';
@@ -12,6 +13,8 @@ class RouteGenerator {
     switch (settings.name) {
       
       case '/':
+        return MaterialPageRoute(builder: (_) => CheckAuth());
+        
       case '/login/loginpage':
         return MaterialPageRoute(builder: (_) => LoginPage());
 

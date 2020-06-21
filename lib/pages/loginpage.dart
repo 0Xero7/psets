@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:psettracker/static/authservice.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 
@@ -13,20 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPage extends State<LoginPage> {
 
   Future _tryLogin(BuildContext _context) async {
-    var res = await UserModel.tryLogin(_username.text, _password.text);
-    if (res)
-      Navigator.popAndPushNamed(_context, '/load');
-    else
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text(
-            'Invalid username/password.',
-            style: GoogleFonts.nunitoSans(fontSize: 16),
-          ),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        )
-      );
+    await AuthService.signInWithUsernamePassword(_username.text, _password.text);
   }
 
   void _register(context) {
@@ -44,57 +33,65 @@ class _LoginPage extends State<LoginPage> {
         key: _scaffoldKey,
         body: SafeArea(
           top: true,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
 
-                Container(
-                  color: Colors.green,
-                  width: 300,
-                  height: 100,
-                ),
+          child: StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && (snapshot.data as FirebaseUser) != null) Navigator.popAndPushNamed(context, '/load');
 
-                Text("Welcome to Point Blank's Problemset Tracker"),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 
-                Container(
-                  width: 200,
-                  child: TextField(
-                    controller: _username,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: "Username"
+                    Container(
+                      color: Colors.green,
+                      width: 300,
+                      height: 100,
                     ),
-                  )
-                ),
 
-                Container(
-                  width: 200,
-                  child: TextField(
-                    controller: _password,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: "Password"
+                    Text("Welcome to Point Blank's Problemset Tracker"),
+
+                    Container(
+                      width: 200,
+                      child: TextField(
+                        controller: _username,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: "E-mail"
+                        ),
+                      )
                     ),
-                  )
-                ),
 
-                FlatButton(
-                  onPressed: () async { 
-                    await _tryLogin(context);
-                  },
-                  child: Text("Login"),
-                ),
+                    Container(
+                      width: 200,
+                      child: TextField(
+                        controller: _password,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: "Password"
+                        ),
+                      )
+                    ),
 
-                Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
+                    FlatButton(
+                      onPressed: () async { 
+                        await _tryLogin(context);
+                      },
+                      child: Text("Login"),
+                    ),
 
-                FlatButton(
-                  onPressed: () => _register(context),
-                  child: Text("Register"),
+                    Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
+
+                    FlatButton(
+                      onPressed: () => _register(context),
+                      child: Text("Register"),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         )
       ),
