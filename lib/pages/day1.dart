@@ -197,13 +197,11 @@ class _Day1 extends State<DayProblems> {
             DataCell(
               GestureDetector(
                 onTap: () {
-                  var uri = Uri(
-                    scheme: 'https',
-                    path: _problems[index].problemLink.replaceFirst('https://', ''),
-                  );
-
-                  print(uri.toString());
-                  launch(uri.toString());
+                  // var uri = Uri(
+                  //   path: _problems[index].problemLink, //s.replaceFirst('https://', ''),
+                  // );
+                  // print(uri.toString());
+                  launch(_problems[index].problemLink);//uri.toString());
                 },
                 child: Text(
                   '${index + 1}. ${_problems[index].problemName}', 
