@@ -202,6 +202,7 @@ class _Day1 extends State<DayProblems> {
                     path: _problems[index].problemLink.replaceFirst('https://', ''),
                   );
 
+                  print(uri.toString());
                   launch(uri.toString());
                 },
                 child: Text(
