@@ -62,12 +62,64 @@ class _LoginPage extends State<LoginPage> {
                   children: [
 
                     Container(
-                      color: Colors.green,
+                      color: Colors.transparent,
                       width: 300,
-                      height: 100,
-                    ),
+                      height: 150,
 
-                    Text("Welcome to Point Blank's Problemset Tracker"),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 10,
+                            left: 10,
+                            right: 10,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "<. >", 
+                                    style: GoogleFonts.ptMono(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 30
+                                    ),
+                                  ),
+                                  Text(
+                                    "Point Blank", 
+                                    style: GoogleFonts.ptMono(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 30
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [                                      
+                                      Text(
+                                        "Problemsets", 
+                                        style: GoogleFonts.ptMono(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20
+                                        ),
+                                      ),
+                                      Text(
+                                        " alpha", 
+                                        style: GoogleFonts.ptMono(
+                                          color: Colors.grey.withAlpha(150),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
 
                     Container(
                       width: 200,
