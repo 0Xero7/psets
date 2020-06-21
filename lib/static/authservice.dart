@@ -9,9 +9,13 @@ class AuthService {
   }
 
   static Future<bool> signInWithUsernamePassword(String email, String password) async {
+    try {
     var auth = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-    if (auth.user == null) return false;
-    return true;
+      if (auth.user == null) return false;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   signInWithGoogle() async {

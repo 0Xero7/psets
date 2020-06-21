@@ -15,7 +15,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPage extends State<LoginPage> {
 
   Future _tryLogin(BuildContext _context) async {
-    await AuthService.signInWithUsernamePassword(_username.text, _password.text);
+    var res = await AuthService.signInWithUsernamePassword(_username.text, _password.text);
+
+    if (!res) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 2),
+        content: Text(
+          'Invalid Email or Password.',
+          style: GoogleFonts.nunito(fontSize: 16),
+        ),
+      ));
+    }
+  }
+
+  Future _loadLoadingPage() async {
+    await Future.delayed(Duration(seconds: 1));
+    print('loading');
+    Navigator.popAndPushNamed(context, '/load');
   }
 
   void _register(context) {
@@ -37,7 +54,7 @@ class _LoginPage extends State<LoginPage> {
           child: StreamBuilder(
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (context, snapshot) {
-              if (snapshot.hasData && (snapshot.data as FirebaseUser) != null) Navigator.popAndPushNamed(context, '/load');
+              if (snapshot.hasData && (snapshot.data as FirebaseUser) != null) { _loadLoadingPage(); }
 
               return Center(
                 child: Column(

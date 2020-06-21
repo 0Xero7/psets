@@ -11,7 +11,7 @@ class CheckAuth extends StatelessWidget {
     print('checking');
 
     var _signedIn = await AuthService.isSignedIn();
-    if (!_signedIn) Navigator.popAndPushNamed(context, '/login/loginpage');
+    if (!_signedIn) Navigator.popAndPushNamed(context, '/login/registerpage');
     else {
       Navigator.popAndPushNamed(context, '/load');
     }
