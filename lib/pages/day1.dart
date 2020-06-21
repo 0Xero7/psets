@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/models/problemmodel.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/utilities/problemutils.dart';
+import 'package:psettracker/widgets/categoryspoiler.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 import 'package:psettracker/widgets/problemstatus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -172,7 +174,10 @@ class _Day1 extends State<DayProblems> {
 
                                 launch(uri.toString());
                               },
-                              child: Text('${index + 1}. ${_problems[index].problemName}', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),),
+                              child: Text(
+                                '${index + 1}. ${_problems[index].problemName}', 
+                                style: GoogleFonts.nunito(color: Colors.blue, fontWeight: FontWeight.w600, fontSize: 16)
+                              ),
                             )
                           ),
                           DataCell(
@@ -216,8 +221,11 @@ class _Day1 extends State<DayProblems> {
                               ),
                             )
                           ),
-                          DataCell(Text('${parseDifficulty(_problems[index].difficulty)}')),
-                          DataCell(Text('${toPascalCase(_problems[index].category)}')),
+                          DataCell(Text(
+                            '${parseDifficulty(_problems[index].difficulty)}',
+                            style: GoogleFonts.nunito(fontSize: 15),
+                          )),
+                          DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID)))// Text('${toPascalCase(_problems[index].category)}')),
                         ]
                       ),
                     ),
