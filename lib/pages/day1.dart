@@ -139,6 +139,14 @@ class _Day1 extends State<DayProblems> {
               ),
             ),
 
+            Positioned(
+              top: 160,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(color: Colors.grey.withAlpha(30))
+            ),
+
 
             Positioned(
               top: 160,
@@ -150,86 +158,7 @@ class _Day1 extends State<DayProblems> {
                 future: widget._dataFetched ? null : _loadProblems(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
-                  return DataTable(
-                    sortColumnIndex: 1,
-                    sortAscending: false,
-
-                    columns: [
-                      DataColumn(label: Text('Problem')),
-                      DataColumn(label: Text('Status')),
-                      DataColumn(label: Text('Difficulty')),
-                      DataColumn(label: Text('Category')),
-                    ],
-
-                    rows: List.generate(_problems.length, (index) =>
-                      DataRow(
-                        cells: [
-                          DataCell(
-                            GestureDetector(
-                              onTap: () {
-                                var uri = Uri(
-                                  scheme: 'https',
-                                  path: _problems[index].problemLink.replaceFirst('https://', ''),
-                                );
-
-                                launch(uri.toString());
-                              },
-                              child: Text(
-                                '${index + 1}. ${_problems[index].problemName}', 
-                                style: GoogleFonts.nunito(color: Colors.blue, fontWeight: FontWeight.w600, fontSize: 16)
-                              ),
-                            )
-                          ),
-                          DataCell(
-                            IgnorePointer(
-                              ignoring: _updating,
-
-                              child: ProblemStatus(
-                                onChanged: (value) async {
-                                  var _id = _problems[index].problemID;
-
-                                  setState(() {
-                                    _updating = true;
-                                    if (value == 1) {
-                                      widget.solved.add(_id);
-                                      widget.cantSolve.removeWhere((element) => element == _id);
-                                    } else if (value == 2) {
-                                      widget.cantSolve.add(_id);
-                                      widget.solved.removeWhere((element) => element == _id);
-                                    } else {
-                                      widget.solved.removeWhere((element) => element == _id);
-                                      widget.cantSolve.removeWhere((element) => element == _id);
-                                    }
-                                  });
-
-                                  if (value == 0) {
-                                    await UserModel.removeSolved(_id);
-                                    await UserModel.removeCSolved(_id);
-                                  }if (value == 1) {
-                                    await UserModel.addSolved(_id);
-                                    await UserModel.removeCSolved(_id);
-                                  } else if (value == 2) {
-                                    await UserModel.addCSolved(_id);
-                                    await UserModel.removeSolved(_id);
-                                  }
-
-                                  setState(() {
-                                    _updating = false;
-                                  });
-                                },
-                                selected: (UserModel.solved_problems.contains(_problems[index].problemID) ? 1 : UserModel.cant_solve_problems.contains(_problems[index].problemID) ? 2 : 0),
-                              ),
-                            )
-                          ),
-                          DataCell(Text(
-                            '${parseDifficulty(_problems[index].difficulty)}',
-                            style: GoogleFonts.nunito(fontSize: 15),
-                          )),
-                          DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID)))// Text('${toPascalCase(_problems[index].category)}')),
-                        ]
-                      ),
-                    ),
-                  );
+                  return MediaQuery.of(context).size.width >= 690 ? buildDataTable() : SingleChildScrollView(scrollDirection: Axis.horizontal, child: buildDataTable());
                 }
               ),
             ),
@@ -238,5 +167,88 @@ class _Day1 extends State<DayProblems> {
       )
     );   
 
+  }
+
+  DataTable buildDataTable() {
+    return DataTable(
+      sortColumnIndex: 1,
+      sortAscending: false,
+
+      columns: [
+        DataColumn(label: Text('Problem')),
+        DataColumn(label: Text('Status')),
+        DataColumn(label: Text('Difficulty')),
+        DataColumn(label: Text('Category')),
+      ],
+
+      rows: List.generate(_problems.length, (index) =>
+        DataRow(
+          cells: [
+            DataCell(
+              GestureDetector(
+                onTap: () {
+                  var uri = Uri(
+                    scheme: 'https',
+                    path: _problems[index].problemLink.replaceFirst('https://', ''),
+                  );
+
+                  launch(uri.toString());
+                },
+                child: Text(
+                  '${index + 1}. ${_problems[index].problemName}', 
+                  style: GoogleFonts.nunito(color: Colors.blue, fontWeight: FontWeight.w600, fontSize: 16)
+                ),
+              )
+            ),
+            DataCell(
+              IgnorePointer(
+                ignoring: _updating,
+
+                child: ProblemStatus(
+                  onChanged: (value) async {
+                    var _id = _problems[index].problemID;
+
+                    setState(() {
+                      _updating = true;
+                      if (value == 1) {
+                        widget.solved.add(_id);
+                        widget.cantSolve.removeWhere((element) => element == _id);
+                      } else if (value == 2) {
+                        widget.cantSolve.add(_id);
+                        widget.solved.removeWhere((element) => element == _id);
+                      } else {
+                        widget.solved.removeWhere((element) => element == _id);
+                        widget.cantSolve.removeWhere((element) => element == _id);
+                      }
+                    });
+
+                    if (value == 0) {
+                      await UserModel.removeSolved(_id);
+                      await UserModel.removeCSolved(_id);
+                    }if (value == 1) {
+                      await UserModel.addSolved(_id);
+                      await UserModel.removeCSolved(_id);
+                    } else if (value == 2) {
+                      await UserModel.addCSolved(_id);
+                      await UserModel.removeSolved(_id);
+                    }
+
+                    setState(() {
+                      _updating = false;
+                    });
+                  },
+                  selected: (UserModel.solved_problems.contains(_problems[index].problemID) ? 1 : UserModel.cant_solve_problems.contains(_problems[index].problemID) ? 2 : 0),
+                ),
+              )
+            ),
+            DataCell(Text(
+              '${parseDifficulty(_problems[index].difficulty)}',
+              style: GoogleFonts.nunito(fontSize: 15),
+            )),
+            DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID)))// Text('${toPascalCase(_problems[index].category)}')),
+          ]
+        ),
+      ),
+    );
   }
 }
