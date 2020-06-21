@@ -13,7 +13,7 @@ class RouteGenerator {
       
       case '/':
       case '/login/loginpage':
-        return MaterialPageRoute(builder: (_) => LoginPage(), settings: RouteSettings(name: 'login'));
+        return MaterialPageRoute(builder: (_) => LoginPage());
 
       case '/login/registerpage':
         return MaterialPageRoute(builder: (_) => RegisterPage());
@@ -22,11 +22,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => LoadPage());
 
       case '/dashboard':
-        return MaterialPageRoute(builder: (_) => Dashboard(), settings: RouteSettings(name: 'dashboard'));
+        return MaterialPageRoute(builder: (_) => Dashboard());
 
       case '/pset/day':
-        return MaterialPageRoute(builder: (_) => DayProblems(day: args as int,), settings: RouteSettings(name: 'pset/day'));
-
+        return MaterialPageRoute(builder: (_) => DayProblems(day: args as int,));
     }
   }
 }

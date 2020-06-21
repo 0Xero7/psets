@@ -38,63 +38,66 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: SafeArea(
-        top: true,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+    return WillPopScope(
+      onWillPop: () async => Future.value(false),
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: SafeArea(
+          top: true,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-              Container(
-                color: Colors.green,
-                width: 300,
-                height: 100,
-              ),
+                Container(
+                  color: Colors.green,
+                  width: 300,
+                  height: 100,
+                ),
 
-              Text("Welcome to Point Blank's Problemset Tracker"),
+                Text("Welcome to Point Blank's Problemset Tracker"),
 
-              Container(
-                width: 200,
-                child: TextField(
-                  controller: _username,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: "Username"
-                  ),
-                )
-              ),
+                Container(
+                  width: 200,
+                  child: TextField(
+                    controller: _username,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: "Username"
+                    ),
+                  )
+                ),
 
-              Container(
-                width: 200,
-                child: TextField(
-                  controller: _password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: "Password"
-                  ),
-                )
-              ),
+                Container(
+                  width: 200,
+                  child: TextField(
+                    controller: _password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: "Password"
+                    ),
+                  )
+                ),
 
-              FlatButton(
-                onPressed: () async { 
-                  await _tryLogin(context);
-                },
-                child: Text("Login"),
-              ),
+                FlatButton(
+                  onPressed: () async { 
+                    await _tryLogin(context);
+                  },
+                  child: Text("Login"),
+                ),
 
-              Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
+                Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
 
-              FlatButton(
-                onPressed: () => _register(context),
-                child: Text("Register"),
-              ),
-            ],
+                FlatButton(
+                  onPressed: () => _register(context),
+                  child: Text("Register"),
+                ),
+              ],
+            ),
           ),
-        ),
-      )
+        )
+      ),
     );   
   }
 }

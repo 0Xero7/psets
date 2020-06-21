@@ -34,20 +34,23 @@ class _LoadPageState extends State<LoadPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapper(
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 50,
-            right: 50,
-            child: SpinKitPulse(color: Colors.cyan, size: 70,)
-          ),
-          Positioned(
-            bottom: 20,
-            right: 57,
-            child: Text('Loading')
-          ),
-        ]
+    return WillPopScope(
+      onWillPop: () async => Future.value(false),
+      child: PageWrapper(
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 50,
+              right: 50,
+              child: SpinKitPulse(color: Colors.cyan, size: 70,)
+            ),
+            Positioned(
+              bottom: 20,
+              right: 57,
+              child: Text('Loading')
+            ),
+          ]
+        ),
       ),
     );
   }

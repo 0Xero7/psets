@@ -1,9 +1,11 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/models/problemmodel.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/utilities/problemutils.dart';
 import 'package:psettracker/widgets/categoryspoiler.dart';
+import 'package:psettracker/widgets/customback.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 import 'package:psettracker/widgets/problemstatus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -56,115 +58,123 @@ class _Day1 extends State<DayProblems> {
     super.initState();
   }
 
-
   @override
-  Widget build(BuildContext context) {
-    
-    return PageWrapper(
-      child: SizedBox.expand( // fill horizontal space
+  Widget build(BuildContext context) {    
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: PageWrapper(
+        child: SizedBox.expand( // fill horizontal space
 
-        child: Stack(
-          children: [
-            
-            Positioned(
-              top : 17,
-              left: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Day ${widget.day}',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w600
-                    ),
-                  ),
-                  Text(
-                    ' Easy',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
+          child: Stack(
+            children: [
+
+              Positioned(
+                top: 25,
+                left: 10,
+
+                child: CustomBack()
               ),
-            ),
-            
-            Positioned(
-              top: 110,
-              right: 20,
-              left: 20,
-
-              child: Center(
-                child: Text(
-                  widget._dataFetched ? "Solved: ${widget.solved.length}/${_problems.length}" : "",
-                  style: TextStyle(fontSize: 20),
+              
+              Positioned(
+                top : 17,
+                left: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Day ${widget.day}',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    Text(
+                      ' Easy',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ),
-
-
-            Positioned(
-              top: 145,
-              left: 0,
-              right: 0,
-
-              child: Container(
-                height: 15,
-                color: Colors.grey.withAlpha(65),
               ),
-            ),
-            Positioned(
-              top: 145,
-              left: 0,
+              
+              Positioned(
+                top: 110,
+                right: 20,
+                left: 20,
 
-              child: Row(
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeOutCubic,
-
-                    height: 15,
-                    width: widget._dataFetched ? MediaQuery.of(context).size.width * (widget.solved.length / _problems.length) : 0,
-                    color: Colors.green.shade600.withAlpha(165),
+                child: Center(
+                  child: Text(
+                    widget._dataFetched ? "Solved: ${widget.solved.length}/${_problems.length}" : "",
+                    style: TextStyle(fontSize: 20),
                   ),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeOutCubic,
-
-                    height: 15,
-                    width: widget._dataFetched ? MediaQuery.of(context).size.width * (widget.cantSolve.length / _problems.length) : 0,
-                    color: Colors.red.shade600.withAlpha(165),
-                  ),
-                ],
+                )
               ),
-            ),
-
-            Positioned(
-              top: 160,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(color: Colors.grey.withAlpha(30))
-            ),
 
 
-            Positioned(
-              top: 160,
-              bottom: 0,
-              left: 0,
-              right: 0,
+              Positioned(
+                top: 145,
+                left: 0,
+                right: 0,
 
-              child: FutureBuilder(
-                future: widget._dataFetched ? null : _loadProblems(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
-                  return MediaQuery.of(context).size.width >= 690 ? buildDataTable() : SingleChildScrollView(scrollDirection: Axis.horizontal, child: buildDataTable());
-                }
+                child: Container(
+                  height: 15,
+                  color: Colors.grey.withAlpha(65),
+                ),
               ),
-            ),
-          ],
-        ),
-      )
+              Positioned(
+                top: 145,
+                left: 0,
+
+                child: Row(
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOutCubic,
+
+                      height: 15,
+                      width: widget._dataFetched ? MediaQuery.of(context).size.width * (widget.solved.length / _problems.length) : 0,
+                      color: Colors.green.shade600.withAlpha(165),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOutCubic,
+
+                      height: 15,
+                      width: widget._dataFetched ? MediaQuery.of(context).size.width * (widget.cantSolve.length / _problems.length) : 0,
+                      color: Colors.red.shade600.withAlpha(165),
+                    ),
+                  ],
+                ),
+              ),
+
+              Positioned(
+                top: 160,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(color: Colors.grey.withAlpha(30))
+              ),
+
+
+              Positioned(
+                top: 160,
+                bottom: 0,
+                left: 0,
+                right: 0,
+
+                child: FutureBuilder(
+                  future: widget._dataFetched ? null : _loadProblems(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
+                    return MediaQuery.of(context).size.width >= 690 ? buildDataTable() : SingleChildScrollView(scrollDirection: Axis.horizontal, child: buildDataTable());
+                  }
+                ),
+              ),
+            ],
+          ),
+        )
+      ),
     );   
 
   }

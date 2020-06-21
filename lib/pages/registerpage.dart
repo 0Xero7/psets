@@ -19,57 +19,61 @@ class _RegisterPage extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapper(
+    return WillPopScope(
+      onWillPop: () async => Future.value(false),
       
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: PageWrapper(
+        
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
 
-          children: [
+            children: [
 
-            Text('Register', style: TextStyle(fontSize: 30),),            
+              Text('Register', style: TextStyle(fontSize: 30),),            
 
-            Container(
-              width: 200,
-              child: TextField(
-                controller: _username,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: "Username"
-                ),
-              )
-            ),
+              Container(
+                width: 200,
+                child: TextField(
+                  controller: _username,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: "Username"
+                  ),
+                )
+              ),
 
-            Text('Available'),
+              Text('Available'),
 
-            Container(
-              width: 200,
-              child: TextField(
-                controller: _password,
-                obscureText: true,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: "Password"
-                ),
-              )
-            ),
+              Container(
+                width: 200,
+                child: TextField(
+                  controller: _password,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: "Password"
+                  ),
+                )
+              ),
 
-            FlatButton(
-              onPressed: () async { 
-                if (await UserModel.isUsernameViable(_username.text))
-                  await UserModel.registerUser(_username.text, _password.text);
-              },
-              child: Text("Register"),
-            ),
+              FlatButton(
+                onPressed: () async { 
+                  if (await UserModel.isUsernameViable(_username.text))
+                    await UserModel.registerUser(_username.text, _password.text);
+                },
+                child: Text("Register"),
+              ),
 
-            Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
+              Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
 
-            FlatButton(
-              onPressed: () => _login(context),
-              child: Text("Already have an account?"),
-            ),
+              FlatButton(
+                onPressed: () => _login(context),
+                child: Text("Already have an account?"),
+              ),
 
-          ],
+            ],
+          ),
         ),
       ),
     );   
