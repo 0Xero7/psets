@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,9 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 3),
+      lowerBound: 0,
+      upperBound: pi
     )..repeat();
   }
 
@@ -59,10 +63,14 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
                     mainAxisSize: MainAxisSize.min,
 
                     children: [
-                      Transform.rotate(
-                        angle: 0,
-                        child: Icon(Icons.settings, size: 100, color: Colors.grey),
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, _) => Transform.rotate(
+                          angle: _controller.value,
+                          child: Icon(Icons.settings, size: 100, color: Colors.grey),
+                        ),
                       ),
+                      
                       const SizedBox(height: 10),
                       Text(
                         'Under Maintainance.',
