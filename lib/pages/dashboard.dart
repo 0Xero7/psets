@@ -61,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
               left: 27,
 
               child: Text(
-                '2 problemsets available',
+                '${ProblemStore.problemset_count} problemsets available',
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -149,7 +149,7 @@ class _DashboardState extends State<Dashboard> {
                                     hoverColor: Colors.grey.withAlpha(100),
 
                                     onTap: () {
-                                      if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null) return null;
+                                      if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null  || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0) return null;
                                       Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1));
                                     },
                                     child: Padding(
@@ -163,7 +163,8 @@ class _DashboardState extends State<Dashboard> {
                                           ),
                                           const SizedBox(height: 5),
                                           Text(
-                                            ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null ? 'Coming Soon' : "${ProblemStore.problemsOnDay(day: i * 7 + j + 1).length} problems",
+                                            ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0
+                                             ? 'Coming Soon' : "${ProblemStore.problemsOnDay(day: i * 7 + j + 1).length} problems",
                                             style: TextStyle(fontSize: 12, color: Colors.black45),
                                           ),
                                         ],

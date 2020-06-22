@@ -18,6 +18,7 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
     // wait for the Auth object to be initialized
     await Future.delayed(Duration(seconds: 2));
     print('checking');
+    // await FirebaseAuth.instance.signOut();
 
     var _signedIn = await AuthService.isSignedIn();
     if (!_signedIn) Navigator.popAndPushNamed(context, '/login/loginpage');
@@ -51,6 +52,10 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot res = snapshot.data;
+
+          // DEV ONLY
+          // _checkAuth(context);
+
           if ((res.data['under_maintainance'] as bool) == false) {
             _checkAuth(context);
           } else {
