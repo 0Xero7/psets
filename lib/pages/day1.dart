@@ -99,7 +99,7 @@ class _Day1 extends State<DayProblems> {
               ),
               
               Positioned(
-                top: 110,
+                top: 150,
                 right: 20,
                 left: 20,
 
@@ -113,7 +113,7 @@ class _Day1 extends State<DayProblems> {
 
 
               Positioned(
-                top: 145,
+                top: 185,
                 left: 0,
                 right: 0,
 
@@ -123,7 +123,7 @@ class _Day1 extends State<DayProblems> {
                 ),
               ),
               Positioned(
-                top: 145,
+                top: 185,
                 left: 0,
 
                 child: Row(
@@ -149,7 +149,7 @@ class _Day1 extends State<DayProblems> {
               ),
 
               Positioned(
-                top: 160,
+                top: 200,
                 bottom: 0,
                 left: 0,
                 right: 0,
@@ -158,7 +158,7 @@ class _Day1 extends State<DayProblems> {
 
 
               Positioned(
-                top: 160,
+                top: 200,
                 bottom: 0,
                 left: 0,
                 right: 0,
@@ -185,10 +185,10 @@ class _Day1 extends State<DayProblems> {
       sortAscending: false,
 
       columns: [
-        DataColumn(label: Text('Problem')),
-        DataColumn(label: Text('Status')),
-        DataColumn(label: Text('Difficulty')),
-        DataColumn(label: Text('Category')),
+        DataColumn(label: Text('Problem', style: GoogleFonts.nunito(fontSize: 15))),
+        DataColumn(label: Text('Status', style: GoogleFonts.nunito(fontSize: 15))),
+        DataColumn(label: Text('Difficulty', style: GoogleFonts.nunito(fontSize: 15))),
+        DataColumn(label: Text('Category', style: GoogleFonts.nunito(fontSize: 15))),
       ],
 
       rows: List.generate(_problems.length, (index) =>

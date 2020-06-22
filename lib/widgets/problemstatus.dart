@@ -46,7 +46,7 @@ class _ProblemStatus extends State<ProblemStatus> {
               widget.onChanged(1);
             },
             child: Container(
-              color: widget.selected == 1 ? Colors.green : Colors.grey.withAlpha(30),
+              color: widget.selected == 1 ? Colors.green.shade600.withAlpha(205) : Colors.grey.withAlpha(30),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -64,7 +64,7 @@ class _ProblemStatus extends State<ProblemStatus> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: widget.selected == 2 ? Colors.red : Colors.grey.withAlpha(30),
+                color: widget.selected == 2 ? Colors.red.shade600.withAlpha(205) : Colors.grey.withAlpha(30),
                 borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10))
               ),
               child: Padding(

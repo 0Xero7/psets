@@ -143,19 +143,23 @@ class _LoginPage extends State<LoginPage> {
                         ),
                       )
                     ),
-
+                    const SizedBox(height: 10),
                     FlatButton(
+                      color: Colors.blue.shade300,
                       onPressed: () async { 
                         await _tryLogin(context);
                       },
-                      child: Text("Login"),
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.nunito(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
                     ),
 
                     Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
 
                     FlatButton(
                       onPressed: () => _register(context),
-                      child: Text("Register"),
+                      child: Text("Sign Up"),
                     ),
                   ],
                 ),
