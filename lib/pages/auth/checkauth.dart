@@ -73,7 +73,7 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
                       
                       const SizedBox(height: 10),
                       Text(
-                        'Under Maintainance.',
+                        'Under Maintainance',
                         style: GoogleFonts.nunito(fontSize: 20),
                       ),
                       const SizedBox(height:5),
