@@ -50,6 +50,8 @@ class _Day1 extends State<DayProblems> {
         break;
       }
     }
+
+    _problems.sort((a, b) => a.difficulty - b.difficulty);
     setState(() => widget._dataFetched = true);
   }
 

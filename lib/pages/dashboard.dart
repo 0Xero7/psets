@@ -118,7 +118,7 @@ class _DashboardState extends State<Dashboard> {
 
             Positioned(
               top: 200,
-              bottom: 0,
+              bottom: 30,
               left: 0,
               right: 0,
 
@@ -140,20 +140,20 @@ class _DashboardState extends State<Dashboard> {
                                 width: 200,
                                 height: 70,
 
-                                child: Material(
-                                  borderRadius: BorderRadius.circular(10),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  onPressed: () {
+                                    if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null  || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0) return null;
+                                    Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1));
+                                  },
                                   color: Colors.white,
+                                  hoverColor: Colors.black12,
+                                  padding: EdgeInsets.zero,
 
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(10),
-                                    hoverColor: Colors.grey.withAlpha(100),
-
-                                    onTap: () {
-                                      if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null  || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0) return null;
-                                      Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1));
-                                    },
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 14),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -170,8 +170,8 @@ class _DashboardState extends State<Dashboard> {
                                         ],
                                       ),
                                     ),
-                                  )
-                                ),
+                                  ),
+                                )
                               )
                             ))
                           ),
@@ -183,6 +183,20 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
+
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+
+              child: Container(
+                color: Colors.black87, height: 30,
+                child: Center(child: FlatButton(
+                  onPressed: () { Navigator.pushNamed(context, '/about/contributors'); },
+                  child: Text('Contributors', style: GoogleFonts.nunito(color: Colors.white),),
+                ),),
+              ),
+            )
           ],
         )
       ),

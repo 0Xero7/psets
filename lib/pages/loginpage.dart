@@ -129,6 +129,8 @@ class _LoginPage extends State<LoginPage> {
                           isDense: true,
                           hintText: "E-mail"
                         ),
+                        textCapitalization: TextCapitalization.none,
+                        keyboardType: TextInputType.emailAddress,
                       )
                     ),
 
@@ -151,7 +153,10 @@ class _LoginPage extends State<LoginPage> {
                       },
                       child: Text(
                         "Login",
-                        style: GoogleFonts.nunito(color: Colors.white, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.nunito(
+                          color: Colors.white, 
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
 

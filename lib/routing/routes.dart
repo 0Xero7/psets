@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psettracker/loadpage.dart';
+import 'package:psettracker/pages/about.dart';
 import 'package:psettracker/pages/auth/checkauth.dart';
+import 'package:psettracker/pages/contributors.dart';
 import 'package:psettracker/pages/dashboard.dart';
 import 'package:psettracker/pages/day1.dart';
 import 'package:psettracker/pages/loginpage.dart';
@@ -13,6 +15,7 @@ class RouteGenerator {
     switch (settings.name) {
       
       case '/':
+        // return MaterialPageRoute(builder: (_) => AboutPage());
         return MaterialPageRoute(builder: (_) => CheckAuth());
         
       case '/login/loginpage':
@@ -29,6 +32,9 @@ class RouteGenerator {
 
       case '/pset/day':
         return MaterialPageRoute(builder: (_) => DayProblems(day: args as int,));
+
+      case '/about/contributors':
+        return MaterialPageRoute(builder: (_) => Contributors());
     }
   }
 }
