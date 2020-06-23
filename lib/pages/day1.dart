@@ -189,6 +189,7 @@ class _Day1 extends State<DayProblems> {
         DataColumn(label: Text('Status', style: GoogleFonts.nunito(fontSize: 15))),
         DataColumn(label: Text('Difficulty', style: GoogleFonts.nunito(fontSize: 15))),
         DataColumn(label: Text('Category', style: GoogleFonts.nunito(fontSize: 15))),
+        DataColumn(label: Text('Company', style: GoogleFonts.nunito(fontSize: 15))),
       ],
 
       rows: List.generate(_problems.length, (index) =>
@@ -250,7 +251,8 @@ class _Day1 extends State<DayProblems> {
               '${parseDifficulty(_problems[index].difficulty)}',
               style: GoogleFonts.nunito(fontSize: 15),
             )),
-            DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID)))// Text('${toPascalCase(_problems[index].category)}')),
+            DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID))),
+            DataCell(Text(_problems[index].companies.reduce((value, element) => value + ', $element')))
           ]
         ),
       ),

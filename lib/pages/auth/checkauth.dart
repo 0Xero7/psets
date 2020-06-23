@@ -54,7 +54,7 @@ class _CheckAuthState extends State<CheckAuth> with SingleTickerProviderStateMix
           DocumentSnapshot res = snapshot.data;
 
           // DEV ONLY
-          // _checkAuth(context);
+          //  _checkAuth(context);
 
           if ((res.data['under_maintainance'] as bool) == false) {
             _checkAuth(context);
