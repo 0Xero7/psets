@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,6 +21,12 @@ class _LoadPageState extends State<LoadPage> {
   Future _loadProblems() async {
     await ProblemStore.loadProblemsets();
   }
+  
+  Future _updateVisits() async {
+    var res = await Firestore.instance.document('/stats/visits').get();
+    int visits = res['visit_count'];
+    await Firestore.instance.document('/stats/visits').setData({'visit_count': visits + 1});
+  }
 
   @override
   void initState() {
@@ -28,7 +35,9 @@ class _LoadPageState extends State<LoadPage> {
     
     _loadUsers().then((value) {
       _loadProblems().then((value) {
-        Navigator.popAndPushNamed(context, '/dashboard');
+        _updateVisits().then((value) {
+          Navigator.popAndPushNamed(context, '/dashboard');
+        });
       });
     });
       

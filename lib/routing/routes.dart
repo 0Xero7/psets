@@ -15,7 +15,6 @@ class RouteGenerator {
     switch (settings.name) {
       
       case '/':
-        // return MaterialPageRoute(builder: (_) => AboutPage());
         return MaterialPageRoute(builder: (_) => CheckAuth());
         
       case '/login/loginpage':
