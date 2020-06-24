@@ -1,5 +1,6 @@
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/models/problemmodel.dart';
 import 'package:psettracker/static/settings.dart';
@@ -174,7 +175,9 @@ class _Day1 extends State<DayProblems> {
                   future: widget._dataFetched ? null : _loadProblems(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) return Center(child: CircularProgressIndicator());
-                    return MediaQuery.of(context).size.width >= 690 ? buildDataTable() : SingleChildScrollView(scrollDirection: Axis.horizontal, child: buildDataTable());
+                    return MediaQuery.of(context).size.width >= 690 ? buildDataTable() : 
+                      SingleChildScrollView(scrollDirection: Axis.vertical, 
+                        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: buildDataTable()));
                   }
                 ),
               ),
