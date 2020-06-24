@@ -23,9 +23,9 @@ class _LoadPageState extends State<LoadPage> {
   }
   
   Future _updateVisits() async {
-    //var res = await Firestore.instance.document('/stats/visits').get();
-    //int visits = res['visit_count'];
-    //await Firestore.instance.document('/stats/visits').setData({'visit_count': visits + 1});
+    var res = await Firestore.instance.document('/stats/visits').get();
+    int visits = res['visit_count'];
+    await Firestore.instance.document('/stats/visits').setData({'visit_count': visits + 1});
   }
 
   @override
