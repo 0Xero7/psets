@@ -32,7 +32,7 @@ class AboutPage extends StatelessWidget {
             ),
 
             Positioned(
-              top: 200,
+              top: 170,
               left: 0,
               right: 0,
 
@@ -76,7 +76,34 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 50),                                    
+                    Container(
+                      width: 250,
+                      child: Text(
+                        "A tracking tool to track progress in coding problems",
+                        style: GoogleFonts.nunito(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 50),                                    
+                    Container(
+                      width: 250,
+                      child: Text(
+                        "All problems belong to their respective copyright owners. Point Blank and any contributors of this app are not the authors and do not own any problems. This app is provided ​“AS IS” and makes no warranties, express or implied, and hereby disclaims all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose.",
+                        style: GoogleFonts.nunito(
+                          color: Colors.grey.withAlpha(60),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+
                   ],
                 ),
               ),

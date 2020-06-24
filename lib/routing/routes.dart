@@ -34,6 +34,9 @@ class RouteGenerator {
 
       case '/about/contributors':
         return MaterialPageRoute(builder: (_) => Contributors());
+
+      case '/about/about':
+        return MaterialPageRoute(builder: (_) => AboutPage());
     }
   }
 }

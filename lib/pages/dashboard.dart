@@ -219,10 +219,21 @@ class _DashboardState extends State<Dashboard> {
 
               child: Container(
                 color: Colors.black87, height: 30,
-                child: Center(child: FlatButton(
-                  onPressed: () { Navigator.pushNamed(context, '/about/contributors'); },
-                  child: Text('Contributors', style: GoogleFonts.nunito(color: Colors.white),),
-                ),),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        onPressed: () { Navigator.pushNamed(context, '/about/contributors'); },
+                        child: Text('Contributors', style: GoogleFonts.nunito(color: Colors.white),),
+                      ),
+                      FlatButton(
+                        onPressed: () { Navigator.pushNamed(context, '/about/about'); },
+                        child: Text('About', style: GoogleFonts.nunito(color: Colors.white),),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             )
           ],
