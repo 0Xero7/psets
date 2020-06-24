@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/static/problemstore.dart';
+import 'package:psettracker/static/settings.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 
@@ -12,6 +13,17 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {  
   int problem_count = 0;
+  int solved_count = UserModel.solved_problems.length;
+  int cant_solve_count = UserModel.cant_solve_problems.length;
+
+  _updateState(a, b) {
+    print(UserModel.solved_problems.length);
+    print(UserModel.cant_solve_problems.length);
+    setState(() {
+      solved_count = a;
+      cant_solve_count = b;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +50,10 @@ class _DashboardState extends State<Dashboard> {
                 },
                 child: Text(
                   'Logout',
-                  style: GoogleFonts.nunito(fontSize: 16)
+                  style: GoogleFonts.nunito(
+                    fontSize: 16,
+                    color: Settings.darkTheme ? Colors.white70 : Colors.black
+                  )
                 )
               ),
             ),
@@ -73,10 +88,10 @@ class _DashboardState extends State<Dashboard> {
               left: 0,
               child: Row(
                 children: [
-                  Container(width: MediaQuery.of(context).size.width * (((UserModel.solved_problems.length ?? 0)/(ProblemStore.problem_count))), 
+                  Container(width: MediaQuery.of(context).size.width * (((solved_count ?? 0)/(ProblemStore.problem_count))), 
                   height: 15, color: Colors.green.shade600.withAlpha(165),),
 
-                  Container(width: MediaQuery.of(context).size.width * (((UserModel.cant_solve_problems.length ?? 0)/(ProblemStore.problem_count))), 
+                  Container(width: MediaQuery.of(context).size.width * (((cant_solve_count ?? 0)/(ProblemStore.problem_count))), 
                   height: 15, color: Colors.red.shade600.withAlpha(165),),
                 ],
               ) 
@@ -100,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black.withAlpha(200)
+                    color: Settings.darkTheme ? Colors.white : Colors.black.withAlpha(200)
                   ),
                 ),
               ),
@@ -112,7 +127,13 @@ class _DashboardState extends State<Dashboard> {
               right: 0,
 
               child: Center(
-                child: Text('Solved: ${UserModel.solved_problems.length}/${ProblemStore.problem_count}', style: TextStyle(fontSize: 20,color: Colors.black54)),
+                child: Text(
+                  'Solved: ${solved_count}/${ProblemStore.problem_count}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Settings.darkTheme ? Colors.white60 : Colors.black54
+                  )
+                ),
               ),
             ),
 
@@ -144,9 +165,10 @@ class _DashboardState extends State<Dashboard> {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   onPressed: () {
                                     if (ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null  || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0) return null;
-                                    Navigator.pushNamed(context, '/pset/day', arguments: (i * 7 + j + 1));
+                                    Navigator.pushNamed(context, '/pset/day', arguments: { 'day': (i * 7 + j + 1), 'callback': _updateState });
                                   },
-                                  color: Colors.white,
+
+                                  color: Settings.darkTheme ? Colors.black54 : Colors.white,
                                   hoverColor: Colors.black12,
                                   padding: EdgeInsets.zero,
 
@@ -159,13 +181,19 @@ class _DashboardState extends State<Dashboard> {
                                         children: [
                                           Text(
                                             'Day ${i * 7 + j + 1}',
-                                            style: TextStyle(fontSize: 17),
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              color: Settings.darkTheme ? Colors.white60 : Colors.black87
+                                            ),
                                           ),
                                           const SizedBox(height: 5),
                                           Text(
                                             ProblemStore.problemsOnDay(day: i * 7 + j + 1) == null || ProblemStore.problemsOnDay(day: i * 7 + j + 1).length == 0
                                              ? 'Coming Soon' : "${ProblemStore.problemsOnDay(day: i * 7 + j + 1).length} problems",
-                                            style: TextStyle(fontSize: 12, color: Colors.black45),
+                                            style: TextStyle(
+                                              fontSize: 12, 
+                                              color: Settings.darkTheme ? Colors.white54 : Colors.black45
+                                            ),
                                           ),
                                         ],
                                       ),

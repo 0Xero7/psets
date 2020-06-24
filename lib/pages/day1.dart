@@ -2,6 +2,7 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/models/problemmodel.dart';
+import 'package:psettracker/static/settings.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/utilities/problemutils.dart';
 import 'package:psettracker/widgets/categoryspoiler.dart';
@@ -13,8 +14,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DayProblems extends StatefulWidget {
 
-  final int day;
-  DayProblems({this.day = 1});
+  int day;
+  Function callback;
+  DayProblems(Map<String, dynamic> arguments) {
+    this.day = arguments['day'];
+    this.callback = arguments['callback'];
+  }
 
   bool status = false;
   Set<String> solved = new Set<String>();
@@ -74,7 +79,7 @@ class _Day1 extends State<DayProblems> {
                 top: 25,
                 left: 10,
 
-                child: CustomBack()
+                child: CustomBack(null)
               ),
               
               Positioned(
@@ -187,11 +192,11 @@ class _Day1 extends State<DayProblems> {
       sortAscending: false,
 
       columns: [
-        DataColumn(label: Text('Problem', style: GoogleFonts.nunito(fontSize: 15))),
-        DataColumn(label: Text('Status', style: GoogleFonts.nunito(fontSize: 15))),
-        DataColumn(label: Text('Difficulty', style: GoogleFonts.nunito(fontSize: 15))),
-        DataColumn(label: Text('Category', style: GoogleFonts.nunito(fontSize: 15))),
-        DataColumn(label: Text('Company', style: GoogleFonts.nunito(fontSize: 15))),
+        DataColumn(label: Text('Problem', style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white60 : Colors.black87))),
+        DataColumn(label: Text('Status', style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white60 : Colors.black87))),
+        DataColumn(label: Text('Difficulty', style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white60 : Colors.black87))),
+        DataColumn(label: Text('Category', style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white60 : Colors.black87))),
+        DataColumn(label: Text('Company', style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white60 : Colors.black87))),
       ],
 
       rows: List.generate(_problems.length, (index) =>
@@ -241,6 +246,8 @@ class _Day1 extends State<DayProblems> {
                       await UserModel.removeSolved(_id);
                     }
 
+                    widget.callback(UserModel.solved_problems.length, UserModel.cant_solve_problems.length);
+
                     setState(() {
                       _updating = false;
                     });
@@ -251,10 +258,13 @@ class _Day1 extends State<DayProblems> {
             ),
             DataCell(Text(
               '${parseDifficulty(_problems[index].difficulty)}',
-              style: GoogleFonts.nunito(fontSize: 15),
+              style: GoogleFonts.nunito(fontSize: 15, color: Settings.darkTheme ? Colors.white70 : Colors.black87 ),
             )),
             DataCell(CategorySpoiler(toPascalCase(_problems[index].category), !UserModel.solved_problems.contains(_problems[index].problemID))),
-            DataCell(Text(_problems[index].companies.reduce((value, element) => value + ', $element')))
+            DataCell(Text(
+              _problems[index].companies.reduce((value, element) => value + ', $element',),
+              style: GoogleFonts.nunito(color: Settings.darkTheme ? Colors.white70 : Colors.black87),
+            ))
           ]
         ),
       ),

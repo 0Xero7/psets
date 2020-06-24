@@ -15,6 +15,7 @@ class RouteGenerator {
     switch (settings.name) {
       
       case '/':
+        //return MaterialPageRoute(builder: (_) => Contributors());
         return MaterialPageRoute(builder: (_) => CheckAuth());
         
       case '/login/loginpage':
@@ -30,7 +31,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Dashboard());
 
       case '/pset/day':
-        return MaterialPageRoute(builder: (_) => DayProblems(day: args as int,));
+        return MaterialPageRoute(builder: (_) => DayProblems(args as Map<String, dynamic>));
 
       case '/about/contributors':
         return MaterialPageRoute(builder: (_) => Contributors());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psettracker/static/settings.dart';
 
 class PageWrapper extends StatelessWidget {
   final Widget child;
@@ -10,6 +11,7 @@ class PageWrapper extends StatelessWidget {
     context = this.context;
     
     return Scaffold(
+      backgroundColor: Settings.darkTheme ? Colors.black87 : Colors.transparent,
       body: SafeArea(
         top: true,
         child: child,

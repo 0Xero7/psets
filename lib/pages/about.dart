@@ -16,7 +16,7 @@ class AboutPage extends StatelessWidget {
               top: 25,
               left: 10,
 
-              child: CustomBack()
+              child: CustomBack(null)
             ),
             
             Positioned(

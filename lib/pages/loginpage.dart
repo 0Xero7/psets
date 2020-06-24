@@ -125,9 +125,10 @@ class _LoginPage extends State<LoginPage> {
                       width: 200,
                       child: TextField(
                         controller: _username,
+                        style: GoogleFonts.nunito(color: Colors.black),
                         decoration: InputDecoration(
                           isDense: true,
-                          hintText: "E-mail"
+                          hintText: "E-mail",
                         ),
                         textCapitalization: TextCapitalization.none,
                         keyboardType: TextInputType.emailAddress,
@@ -139,6 +140,7 @@ class _LoginPage extends State<LoginPage> {
                       child: TextField(
                         controller: _password,
                         obscureText: true,
+                        style: GoogleFonts.nunito(color: Colors.black),
                         decoration: InputDecoration(
                           isDense: true,
                           hintText: "Password"

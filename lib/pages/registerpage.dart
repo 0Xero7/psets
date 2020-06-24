@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:psettracker/static/authservice.dart';
+import 'package:psettracker/static/settings.dart';
 import 'package:psettracker/static/usermodel.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 
@@ -67,115 +68,120 @@ class _RegisterPage extends State<RegisterPage> {
     return WillPopScope(
       onWillPop: () async => Future.value(false),
       
-      child: PageWrapper(
-        
-        child: StreamBuilder(
-          stream: FirebaseAuth.instance.onAuthStateChanged,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && (snapshot.data as FirebaseUser) != null) {
-              UserModel.createUser(_username.text).then((value) => Navigator.popAndPushNamed(context, '/load'));
-            }
+      child: Scaffold(
+        body: SafeArea(
+          top: true,
+          child: StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && (snapshot.data as FirebaseUser) != null) {
+                UserModel.createUser(_username.text).then((value) => Navigator.popAndPushNamed(context, '/load'));
+              }
 
-            return Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [ BoxShadow(color: Colors.black12, blurRadius: 5) ],
-                  borderRadius: BorderRadius.circular(15)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 45),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+              return Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [ BoxShadow(color: Colors.black12, blurRadius: 5) ],
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 45),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
 
-                    children: [
+                      children: [
 
-                      Text('Sign Up', style: TextStyle(fontSize: 30),),            
+                        Text('Sign Up', style: TextStyle(fontSize: 30, color: Colors.black87),),            
 
-                      const SizedBox(height: 50),
+                        const SizedBox(height: 50),
 
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 200,
-                            child: TextField(
-                              controller: _username,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: "Display Name",
-                              ),
-                            )
-                          ),
-                          const SizedBox(height:3),
-                          Text(_displayNameError, style: GoogleFonts.nunito(color: Colors.red)),
-                        ],
-                      ),
-
-                      const SizedBox(height: 40),
-                      
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 200,
-                            child: TextField(
-                              controller: _email,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: "E-mail"
-                              ),
-                            )
-                          ),
-                          const SizedBox(height:3),
-                          Text(_emailError, style: GoogleFonts.nunito(color: Colors.red)),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        width: 200,
-                        child: Column(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextField(
-                              controller: _password,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: "Password"
-                              ),
+                            Container(
+                              width: 200,
+                              child: TextField(
+                                controller: _username,
+                                style: GoogleFonts.nunito(color: Colors.black),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "Display Name",
+                                ),
+                              )
                             ),
                             const SizedBox(height:3),
-                            Text(_passwordError, style: GoogleFonts.nunito(color: Colors.red)),
+                            Text(_displayNameError, style: GoogleFonts.nunito(color: Colors.red)),
                           ],
-                        )
-                      ),
+                        ),
 
-                      const SizedBox(height: 10),            
+                        const SizedBox(height: 40),
+                        
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 200,
+                              child: TextField(
+                                controller: _email,
+                                style: GoogleFonts.nunito(color: Colors.black),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "E-mail"
+                                ),
+                              )
+                            ),
+                            const SizedBox(height:3),
+                            Text(_emailError, style: GoogleFonts.nunito(color: Colors.red)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          width: 200,
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: _password,
+                                obscureText: true,
+                                style: GoogleFonts.nunito(color: Colors.black),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "Password"
+                                ),
+                              ),
+                              const SizedBox(height:3),
+                              Text(_passwordError, style: GoogleFonts.nunito(color: Colors.red)),
+                            ],
+                          )
+                        ),
 
-                      FlatButton(
-                        color: Colors.blue.shade400,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                        onPressed: () async {
-                          await _tryRegister();
-                        },
-                        child: Text("Sign Up", style: GoogleFonts.nunito(color: Colors.white, fontWeight: FontWeight.bold))
-                      ),
+                        const SizedBox(height: 10),            
 
-                      Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
+                        FlatButton(
+                          color: Colors.blue.shade400,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                          onPressed: () async {
+                            await _tryRegister();
+                          },
+                          child: Text("Sign Up", style: GoogleFonts.nunito(color: Colors.white, fontWeight: FontWeight.bold))
+                        ),
 
-                      FlatButton(
-                        onPressed: () => _login(context),
-                        child: Text("Already have an account?"),
-                      ),
+                        Container(width: 150, height: 1, color: Colors.grey.withAlpha(50),),
 
-                    ],
+                        FlatButton(
+                          onPressed: () => _login(context),
+                          child: Text("Already have an account?"),
+                        ),
+
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
+              );
+            },
+          ),
+        )
       ),
     );   
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:psettracker/static/settings.dart';
 import 'package:psettracker/widgets/customback.dart';
 import 'package:psettracker/widgets/pagewrapper.dart';
 
@@ -39,7 +40,7 @@ class Contributors extends StatelessWidget {
               top: 25,
               left: 10,
 
-              child: CustomBack()
+              child: CustomBack(null)
             ),
             
             Positioned(
@@ -70,7 +71,7 @@ class Contributors extends StatelessWidget {
                       children: [
                         Text('Created and Maintained by'),
                         Text('Soumya Pattanayak', style: GoogleFonts.nunito(fontSize: 20)),
-                        Text('CSE, DSCE', style: GoogleFonts.nunito(fontSize: 14, color: Colors.black54)),
+                        Text('CSE, DSCE', style: GoogleFonts.nunito(fontSize: 14, color: Settings.darkTheme ? Colors.white54 : Colors.black54)),
                       ],
                     ),
                     
@@ -81,7 +82,7 @@ class Contributors extends StatelessWidget {
                       children: [
                         Text('Problemset contributed by'),
                         Text('Mohit Agarwal', style: GoogleFonts.nunito(fontSize: 20)),
-                        Text('CSE, DSCE', style: GoogleFonts.nunito(fontSize: 14, color: Colors.black54)),
+                        Text('CSE, DSCE', style: GoogleFonts.nunito(fontSize: 14, color: Settings.darkTheme ? Colors.white54 : Colors.black54)),
                       ],
                     ),
 
@@ -95,7 +96,7 @@ class Contributors extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(_c[index].heading, style: GoogleFonts.nunito(fontSize: 18)),
-                          Text(_c[index].subtitle, style: GoogleFonts.nunito(fontSize: 14, color: Colors.black54)),
+                          Text(_c[index].subtitle, style: GoogleFonts.nunito(fontSize: 14, color: Settings.darkTheme ? Colors.white54 : Colors.black54)),
                           const SizedBox(height: 30),
                         ],
                       ))

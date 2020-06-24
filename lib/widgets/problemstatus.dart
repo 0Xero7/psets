@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:psettracker/static/settings.dart';
 
 class ProblemStatus extends StatefulWidget {
   final Function onChanged;
@@ -34,7 +35,7 @@ class _ProblemStatus extends State<ProblemStatus> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.selected == 0 ? 'Not Solved' : 'NS',
-                  style: GoogleFonts.nunito(color: widget.selected == 0 ? Colors.white : Colors.black),
+                  style: GoogleFonts.nunito(color: widget.selected == 0 ? Colors.white : (Settings.darkTheme ? Colors.white30 : Colors.black38)),
                 ),
               ),
             ),
@@ -51,7 +52,7 @@ class _ProblemStatus extends State<ProblemStatus> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.selected == 1 ? 'Solved' : 'AC',
-                  style: GoogleFonts.nunito(color: widget.selected == 1 ? Colors.white : Colors.black),
+                  style: GoogleFonts.nunito(color: widget.selected == 1 ? Colors.white : (Settings.darkTheme ? Colors.white30 : Colors.black38)),
                 ),
               ),
             ),
@@ -71,7 +72,7 @@ class _ProblemStatus extends State<ProblemStatus> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.selected == 2 ? 'Can\'t Solve' : 'CS',
-                  style: GoogleFonts.nunito(color: widget.selected == 2 ? Colors.white : Colors.black),
+                  style: GoogleFonts.nunito(color: widget.selected == 2 ? Colors.white : (Settings.darkTheme ? Colors.white30 : Colors.black38)),
                 ),
               ),
             ),
